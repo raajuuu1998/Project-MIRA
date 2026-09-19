@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Project MIRA — Molecular Biomarker-Informed Representation Adaptation across Cancers.">
+  <title>Project MIRA</title>
+
+  <style>
+    :root{
+      --blue:#233f8f;
+      --blue-dark:#1d3579;
+      --text:#2f2f2f;
+      --muted:#6b6b6b;
+      --line:#e2e5eb;
+      --bg:#f5f6f8;
+      --white:#ffffff;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+
+    .wrap{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    /* HERO */
+    .hero{
+      background:var(--blue);
+      color:#fff;
+      padding:58px 0 42px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 260px;
+      gap:48px;
+      align-items:center;
+    }
+
+    .project-title{
+      margin:0;
+      font-size:2.7rem;
+      line-height:1.05;
+      font-weight:800;
+      letter-spacing:-0.025em;
+    }
+
+    .project-subtitle{
+      margin:16px 0 24px;
+      font-size:1.15rem;
+      line-height:1.5;
+      max-width:820px;
+      color:rgba(255,255,255,.93);
+    }
+
+    .nav-pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .nav-btn{
+      border:2px solid rgba(255,255,255,.9);
+      background:transparent;
+      color:#fff;
+      border-radius:999px;
+      padding:10px 22px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.15s ease;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active{
+      background:#fff;
+      color:var(--blue);
+    }
+
+    .mark-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .mark{
+      width:176px;
+      height:176px;
+      border:3px solid rgba(255,255,255,.88);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      background:rgba(255,255,255,.03);
+    }
+
+    .mark::before,
+    .mark::after{
+      content:"";
+      position:absolute;
+      border:2px solid rgba(255,255,255,.35);
+      border-radius:50%;
+    }
+
+    .mark::before{
+      width:128px;
+      height:128px;
+    }
+
+    .mark::after{
+      width:84px;
+      height:84px;
+    }
+
+    .mark span{
+      position:relative;
+      z-index:2;
+      font-family:Georgia, "Times New Roman", serif;
+      font-weight:700;
+      font-size:3rem;
+      letter-spacing:-.07em;
+    }
+
+    /* PAGE BODY */
+    .content{
+      padding:12px 0 36px;
+    }
+
+    .view{display:none}
+    .view.active{display:block}
+
+    .home-grid{
+      display:grid;
+      grid-template-columns:minmax(0,2fr) minmax(280px,.9fr);
+      gap:18px;
+      align-items:start;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:13px;
+      box-shadow:0 1px 3px rgba(0,0,0,.04);
+      padding:28px 30px;
+    }
+
+    .card + .card{
+      margin-top:18px;
+    }
+
+    .card h2{
+      margin:0;
+      font-size:1.65rem;
+      line-height:1.2;
+      font-weight:800;
+      color:#353535;
+    }
+
+    .rule{
+      height:1px;
+      background:var(--line);
+      margin:16px 0 18px;
+    }
+
+    .card p{
+      margin:0 0 15px;
+      font-size:1rem;
+    }
+
+    .card p:last-child{
+      margin-bottom:0;
+    }
+
+    .card strong{
+      font-weight:750;
+    }
+
+    .academic-em{
+      font-style:italic;
+    }
+
+    .updates{
+      max-height:430px;
+      overflow:auto;
+      padding-right:5px;
+    }
+
+    .update{
+      padding:0 0 18px;
+      margin-bottom:18px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .update:last-child{
+      border-bottom:0;
+      margin-bottom:0;
+      padding-bottom:0;
+    }
+
+    .date{
+      color:var(--blue);
+      font-weight:800;
+      font-size:.9rem;
+      margin-bottom:5px;
+    }
+
+    .update p{
+      color:#4e4e4e;
+      font-size:.94rem;
+      line-height:1.5;
+    }
+
+    /* RESEARCH */
+    .section-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:13px;
+      padding:30px;
+      box-shadow:0 1px 3px rgba(0,0,0,.04);
+    }
+
+    .section-card h2{
+      margin:0;
+      font-size:1.7rem;
+      font-weight:800;
+    }
+
+    .lead{
+      color:#5b5b5b;
+      margin:8px 0 22px;
+      max-width:900px;
+    }
+
+    .focus-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .focus-item{
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:20px;
+      background:#fafafa;
+    }
+
+    .focus-item h3{
+      margin:0 0 7px;
+      font-size:1.05rem;
+      color:#333;
+    }
+
+    .focus-item p{
+      margin:0;
+      color:#666;
+      font-size:.94rem;
+    }
+
+    /* PUBLICATIONS */
+    .pub-list{
+      margin-top:20px;
+      border-top:1px solid var(--line);
+    }
+
+    .pub{
+      display:grid;
+      grid-template-columns:90px 1fr 140px;
+      gap:20px;
+      padding:20px 0;
+      border-bottom:1px solid var(--line);
+      align-items:start;
+    }
+
+    .pub-year,
+    .pub-venue{
+      color:#707070;
+      font-size:.9rem;
+    }
+
+    .pub-title{
+      font-weight:700;
+      color:#333;
+      margin-bottom:5px;
+    }
+
+    .pub-meta{
+      color:#777;
+      font-size:.9rem;
+    }
+
+    /* NOTES */
+    .note-list{
+      margin-top:18px;
+      border-top:1px solid var(--line);
+    }
+
+    .note{
+      padding:18px 0;
+      border-bottom:1px solid var(--line);
+    }
+
+    .note h3{
+      margin:0 0 5px;
+      font-size:1.05rem;
+    }
+
+    .note p{
+      margin:0;
+      color:#6b6b6b;
+      font-size:.93rem;
+    }
+
+    footer{
+      color:#777;
+      font-size:.8rem;
+      padding:8px 0 36px;
+    }
+
+    @media(max-width:850px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .mark-wrap{
+        display:none;
+      }
+
+      .project-title{
+        font-size:2.2rem;
+      }
+
+      .home-grid{
+        grid-template-columns:1fr;
+      }
+
+      .focus-grid{
+        grid-template-columns:1fr;
+      }
+
+      .pub{
+        grid-template-columns:1fr;
+        gap:5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1 class="project-title">Project MIRA</h1>
+
+        <p class="project-subtitle">
+          Molecular Biomarker-Informed Representation Adaptation across Cancers.
+        </p>
+
+        <div class="nav-pills">
+          <button class="nav-btn active" data-view="home">Home</button>
+          <button class="nav-btn" data-view="research">Research</button>
+          <button class="nav-btn" data-view="publications">Publications</button>
+          <button class="nav-btn" data-view="notes">Research Notes</button>
+        </div>
+      </div>
+
+      <div class="mark-wrap">
+        <div class="mark" aria-label="Project MIRA monogram">
+          <span>M</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="wrap">
+
+      <!-- HOME -->
+      <section class="view active" id="home">
+        <div class="home-grid">
+
+          <div>
+            <article class="card">
+              <h2>About</h2>
+              <div class="rule"></div>
+
+              <p>
+                <strong>Project MIRA</strong> is a computational pathology research
+                initiative focused on learning clinically relevant
+                <strong>molecular biomarkers from routine histopathology</strong>.
+              </p>
+
+              <p>
+                We study the intersection of
+                <span class="academic-em">histomorphology, molecular phenotype,
+                spatial tissue organization, and representation learning</span>,
+                with particular emphasis on robustness across cancers, cohorts,
+                institutions, and acquisition domains.
+              </p>
+
+              <p>
+                The broader goal is to develop biologically meaningful tumor
+                representations that support transferable biomarker prediction and
+                clinically relevant stratification.
+              </p>
+            </article>
+
+            <article class="card">
+              <h2>Research Focus</h2>
+              <div class="rule"></div>
+
+              <p>
+                Project MIRA examines how histologic morphology and spatial tissue
+                context can support molecular biomarker inference while remaining
+                robust to biological and technical variation.
+              </p>
+
+              <p>
+                Current methodological themes include
+                <strong>molecular biomarker prediction</strong>,
+                <strong>biology-informed representation learning</strong>,
+                <strong>cross-cancer transfer</strong>, and
+                <strong>domain adaptation and generalization</strong>.
+              </p>
+            </article>
+          </div>
+
+          <aside class="card">
+            <h2>Updates</h2>
+            <div class="rule"></div>
+
+            <div class="updates">
+              <div class="update">
+                <div class="date">Project MIRA</div>
+                <p>
+                  The research initiative is being developed as a home for ongoing
+                  work in computational pathology and molecular biomarker learning.
+                </p>
+              </div>
+
+              <div class="update">
+                <div class="date">Publications</div>
+                <p>
+                  Project-linked papers, posters, code, and supplementary material
+                  will be added here progressively.
+                </p>
+              </div>
+
+              <div class="update">
+                <div class="date">Research Notes</div>
+                <p>
+                  Technical notes and short research discussions will appear in the
+                  dedicated notes section.
+                </p>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </section>
+
+      <!-- RESEARCH -->
+      <section class="view" id="research">
+        <div class="section-card">
+          <h2>Research</h2>
+          <p class="lead">
+            Project MIRA focuses on molecular biomarker learning from histopathology
+            and the development of representations that remain biologically meaningful
+            across cancer types and data domains.
+          </p>
+
+          <div class="focus-grid">
+            <div class="focus-item">
+              <h3>Molecular Biomarker Prediction</h3>
+              <p>
+                Inferring clinically relevant molecular phenotypes directly from
+                routine histopathology.
+              </p>
+            </div>
+
+            <div class="focus-item">
+              <h3>Cross-Cancer Transfer</h3>
+              <p>
+                Studying whether biomarker-associated representations remain useful
+                across distinct tumor types and patient populations.
+              </p>
+            </div>
+
+            <div class="focus-item">
+              <h3>Biology-Informed Representations</h3>
+              <p>
+                Using morphology, nuclei, spatial organization, and tissue context
+                to guide model representations.
+              </p>
+            </div>
+
+            <div class="focus-item">
+              <h3>Adaptation &amp; Generalization</h3>
+              <p>
+                Developing models robust to cohort, institution, acquisition, and
+                cancer-specific distribution shifts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PUBLICATIONS -->
+      <section class="view" id="publications">
+        <div class="section-card">
+          <h2>Publications</h2>
+          <p class="lead">
+            Papers associated with Project MIRA will be organized here with links to
+            manuscripts, posters, code, and supplementary resources.
+          </p>
+
+          <div class="pub-list">
+            <div class="pub">
+              <div class="pub-year">—</div>
+              <div>
+                <div class="pub-title">Publication entries will be added here.</div>
+                <div class="pub-meta">Authors and paper information</div>
+              </div>
+              <div class="pub-venue">—</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTES -->
+      <section class="view" id="notes">
+        <div class="section-card">
+          <h2>Research Notes</h2>
+          <p class="lead">
+            Short technical posts, methodological observations, paper discussions,
+            and updates from ongoing computational pathology research.
+          </p>
+
+          <div class="note-list">
+            <div class="note">
+              <h3>Research notes will appear here.</h3>
+              <p>
+                This section is reserved for future blog-style technical posts and
+                project updates.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Project MIRA · Molecular Biomarker-Informed Representation Adaptation across Cancers
+    </div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll(".nav-btn");
+    const views = document.querySelectorAll(".view");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.view;
+
+        buttons.forEach(b => b.classList.remove("active"));
+        views.forEach(v => v.classList.remove("active"));
+
+        button.classList.add("active");
+        document.getElementById(target).classList.add("active");
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+  </script>
+
+</body>
+</html>
