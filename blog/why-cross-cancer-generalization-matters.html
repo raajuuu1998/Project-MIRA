@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>
+    Why Cross-Cancer Generalization Matters in Computational Pathology · Project MIRA
+  </title>
+
+  <meta
+    name="description"
+    content="Why cross-cancer generalization matters in computational pathology."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: #171717;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      width: min(860px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    /* TOP */
+    .top {
+      padding: 28px 0 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .back {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      text-decoration: underline;
+    }
+
+    /* ARTICLE HEADER */
+    .article-header {
+      padding: 58px 0 34px;
+    }
+
+    .kicker {
+      margin-bottom: 12px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.25rem, 5.5vw, 4.35rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 780px;
+      color: #4a4a4a;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* ARTICLE */
+    article {
+      padding: 10px 0 70px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    article h2 {
+      margin: 36px 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.55rem;
+      line-height: 1.25;
+    }
+
+    article p {
+      margin: 0 0 18px;
+      font-size: 1rem;
+      color: #2d2d2d;
+    }
+
+    .note {
+      margin: 32px 0 0;
+      padding: 18px 0;
+      border-top: 1px solid #dddddd;
+      border-bottom: 1px solid #dddddd;
+      color: #555555;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      border-top: 1px solid #e0e0e0;
+      padding: 22px 0 34px;
+      color: #666666;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 600px) {
+      .article-header {
+        padding-top: 40px;
+      }
+
+      h1 {
+        font-size: 2.35rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="top">
+    <div class="wrap">
+      <a class="back" href="../index.html#blog">
+        ← Project MIRA Blog
+      </a>
+    </div>
+  </header>
+
+
+  <main class="wrap">
+
+    <section class="article-header">
+
+      <div class="kicker">
+        Project MIRA Blog
+      </div>
+
+      <h1>
+        Why Cross-Cancer Generalization Matters in Computational Pathology
+      </h1>
+
+      <p class="lead">
+        A pathology model is most useful when the signal it learns survives
+        changes in cancer type, cohort, institution, and acquisition conditions.
+      </p>
+
+    </section>
+
+
+    <article>
+
+      <h2>
+        Good performance within one cancer is not the same as transfer
+      </h2>
+
+      <p>
+        Computational pathology models are often developed and evaluated
+        within a single disease cohort. This is a useful starting point,
+        but it does not answer a more difficult question: does the learned
+        representation still contain the right information when the model
+        is moved to a morphologically different cancer?
+      </p>
+
+      <p>
+        A model can achieve strong internal discrimination while relying
+        partly on features that are specific to the source organ, cohort,
+        scanner, staining process, or patient population. These features
+        may be predictive in the development dataset but become unreliable
+        when the deployment setting changes.
+      </p>
+
+
+      <h2>
+        Cancer-type shift is more than a scanner shift
+      </h2>
+
+      <p>
+        Cross-site generalization usually asks whether a model survives
+        technical differences such as staining, scanners, laboratories,
+        or acquisition pipelines. Cross-cancer generalization adds a
+        biological shift. Tissue architecture, cellular composition,
+        stromal organization, and tumor morphology can all change
+        substantially between organs.
+      </p>
+
+      <p>
+        This means that a transferable pathology representation must
+        preserve disease-relevant information without depending too
+        strongly on organ-specific appearance. The problem is therefore
+        not only to remove technical variation, but to identify which
+        biological signals remain useful across distinct tissue contexts.
+      </p>
+
+
+      <h2>
+        Molecular biomarkers create a useful test case
+      </h2>
+
+      <p>
+        Biomarkers such as microsatellite instability and tumor mutational
+        burden provide an interesting setting for studying transfer. Their
+        molecular mechanisms are not identical, and their histological
+        manifestations can vary across cancers, yet both can be associated
+        with recurring tumor–immune patterns.
+      </p>
+
+      <p>
+        This creates a useful scientific question: can a model use recurring
+        biological structure, rather than only source-specific morphology,
+        to improve prediction in an unseen cancer? Evaluating that question
+        requires strict separation between the source data used for
+        development and the target cancer used for testing.
+      </p>
+
+
+      <h2>
+        What should be measured
+      </h2>
+
+      <p>
+        A convincing cross-cancer study should report more than one internal
+        validation score. External cohorts, multiple target cancers,
+        cross-site evaluation, confidence intervals, reciprocal transfer
+        directions, calibration, and component ablations can help distinguish
+        a genuinely transferable signal from a source-specific result.
+      </p>
+
+      <p>
+        Negative transfer is also informative. If a method improves one
+        source–target pair but degrades another, that asymmetry can reveal
+        that transfer depends on the biological relationship between cancers
+        rather than on a universal invariant representation.
+      </p>
+
+
+      <h2>
+        The goal is not to make every cancer look the same
+      </h2>
+
+      <p>
+        Cross-cancer generalization should not be interpreted as forcing
+        all tissue types into a single cancer-invariant representation.
+        Organ-specific morphology contains real biological information
+        and should not simply be removed.
+      </p>
+
+      <p>
+        A more useful goal is to learn representations in which clinically
+        relevant signals remain accessible despite changes in tissue context.
+        That shifts the emphasis from maximizing performance on one benchmark
+        to understanding which histopathological features are biologically
+        meaningful, transferable, and robust.
+      </p>
+
+
+      <div class="note">
+        This article is a Project MIRA research perspective and is not a
+        peer-reviewed publication.
+      </div>
+
+    </article>
+
+  </main>
+
+
+  <footer>
+    <div class="wrap">
+      © 2026 Project MIRA
+    </div>
+  </footer>
+
+</body>
+</html>
