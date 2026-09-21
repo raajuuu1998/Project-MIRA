@@ -95,20 +95,20 @@
     }
 
     article h2 {
-      margin: 36px 0 12px;
+      margin: 42px 0 14px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.55rem;
+      font-size: 1.65rem;
       line-height: 1.25;
     }
 
     article p {
-      margin: 0 0 18px;
+      margin: 0 0 20px;
       font-size: 1rem;
       color: #2d2d2d;
     }
 
     .note {
-      margin: 32px 0 0;
+      margin: 36px 0 0;
       padding: 18px 0;
       border-top: 1px solid #dddddd;
       border-bottom: 1px solid #dddddd;
@@ -159,8 +159,9 @@
       </h1>
 
       <p class="lead">
-        A pathology model is most useful when the signal it learns survives
-        changes in cancer type, cohort, institution, and acquisition conditions.
+        Strong performance within one cancer type does not necessarily mean
+        that a pathology model has learned biology that will remain useful
+        when tissue context, patient population, or acquisition conditions change.
       </p>
 
     </section>
@@ -169,106 +170,68 @@
     <article>
 
       <h2>
-        Good performance within one cancer is not the same as transfer
+        From within-cohort performance to genuine biological transfer
       </h2>
 
       <p>
-        Computational pathology models are often developed and evaluated
-        within a single disease cohort. This is a useful starting point,
-        but it does not answer a more difficult question: does the learned
-        representation still contain the right information when the model
-        is moved to a morphologically different cancer?
+        Many computational pathology models are developed and evaluated within
+        a single cancer cohort. This is an important first step, but it leaves
+        a fundamental question unresolved: what exactly has the model learned?
+        High internal performance can arise from genuinely disease-relevant
+        morphology, but it can also reflect patterns that are specific to the
+        source organ, institution, staining workflow, scanner, or patient
+        population. When the same model is evaluated in a different cancer,
+        these dependencies are exposed. Cross-cancer evaluation therefore
+        provides a more demanding test of whether a learned representation
+        captures biological information that remains useful beyond the
+        environment in which it was developed.
       </p>
 
       <p>
-        A model can achieve strong internal discrimination while relying
-        partly on features that are specific to the source organ, cohort,
-        scanner, staining process, or patient population. These features
-        may be predictive in the development dataset but become unreliable
-        when the deployment setting changes.
+        This challenge extends beyond the technical domain shifts usually
+        considered in cross-site validation. Moving between cancer types also
+        introduces substantial biological variation: tissue architecture,
+        cellular composition, stromal organization, immune infiltration, and
+        tumor morphology can differ markedly across organs. A transferable
+        representation should therefore neither ignore tissue context nor
+        depend entirely on organ-specific appearance. The more interesting
+        objective is to preserve disease-relevant signals that recur across
+        distinct histological environments while allowing genuine
+        cancer-specific biology to remain represented.
       </p>
 
 
       <h2>
-        Cancer-type shift is more than a scanner shift
+        Biomarkers as a test of transferable pathology representations
       </h2>
 
       <p>
-        Cross-site generalization usually asks whether a model survives
-        technical differences such as staining, scanners, laboratories,
-        or acquisition pipelines. Cross-cancer generalization adds a
-        biological shift. Tissue architecture, cellular composition,
-        stromal organization, and tumor morphology can all change
-        substantially between organs.
+        Molecular biomarkers offer a particularly useful setting for studying
+        this problem. Biomarkers such as microsatellite instability and tumor
+        mutational burden arise from different molecular processes and may
+        present differently across cancer types, yet both can be associated
+        with recurring features of the tumor microenvironment, including
+        immune activity and patterns of tumor–host interaction. This raises
+        an important scientific question: can a pathology model identify
+        biological structure that remains predictive when the target cancer
+        has never been used during model development? Answering this requires
+        strict separation between source and target cancers so that performance
+        in the target cohort reflects transfer rather than adaptation.
       </p>
 
       <p>
-        This means that a transferable pathology representation must
-        preserve disease-relevant information without depending too
-        strongly on organ-specific appearance. The problem is therefore
-        not only to remove technical variation, but to identify which
-        biological signals remain useful across distinct tissue contexts.
-      </p>
-
-
-      <h2>
-        Molecular biomarkers create a useful test case
-      </h2>
-
-      <p>
-        Biomarkers such as microsatellite instability and tumor mutational
-        burden provide an interesting setting for studying transfer. Their
-        molecular mechanisms are not identical, and their histological
-        manifestations can vary across cancers, yet both can be associated
-        with recurring tumor–immune patterns.
-      </p>
-
-      <p>
-        This creates a useful scientific question: can a model use recurring
-        biological structure, rather than only source-specific morphology,
-        to improve prediction in an unseen cancer? Evaluating that question
-        requires strict separation between the source data used for
-        development and the target cancer used for testing.
-      </p>
-
-
-      <h2>
-        What should be measured
-      </h2>
-
-      <p>
-        A convincing cross-cancer study should report more than one internal
-        validation score. External cohorts, multiple target cancers,
-        cross-site evaluation, confidence intervals, reciprocal transfer
-        directions, calibration, and component ablations can help distinguish
-        a genuinely transferable signal from a source-specific result.
-      </p>
-
-      <p>
-        Negative transfer is also informative. If a method improves one
-        source–target pair but degrades another, that asymmetry can reveal
-        that transfer depends on the biological relationship between cancers
-        rather than on a universal invariant representation.
-      </p>
-
-
-      <h2>
-        The goal is not to make every cancer look the same
-      </h2>
-
-      <p>
-        Cross-cancer generalization should not be interpreted as forcing
-        all tissue types into a single cancer-invariant representation.
-        Organ-specific morphology contains real biological information
-        and should not simply be removed.
-      </p>
-
-      <p>
-        A more useful goal is to learn representations in which clinically
-        relevant signals remain accessible despite changes in tissue context.
-        That shifts the emphasis from maximizing performance on one benchmark
-        to understanding which histopathological features are biologically
-        meaningful, transferable, and robust.
+        Evaluating such transfer requires more than a single external score.
+        Multiple target cancers, independent cohorts, confidence intervals,
+        reciprocal transfer experiments, calibration analysis, and component
+        ablations can help determine whether an apparent improvement represents
+        a robust transferable signal or a favorable source–target pairing.
+        Negative transfer is equally informative: if knowledge learned from
+        one cancer improves prediction in one target but harms another, the
+        asymmetry may reveal meaningful biological differences between those
+        diseases. The aim of cross-cancer generalization is therefore not to
+        make every cancer look the same, but to understand which
+        histopathological signals remain accessible and clinically relevant
+        despite substantial changes in tissue context.
       </p>
 
 
